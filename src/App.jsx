@@ -78,7 +78,7 @@ const App = ({ modeToggleFunc, modeToggle }) => {
 
         const cnt = await getCountFromServer(buttonCollectionRef);
         buttonsData.map((item) => {
-            console.log("btnnnnnnnn----datttt", item.githubUsername);
+            console.log("id:", item.githubUsername);
         });
         console.log("count: " + cnt.data().count);
         setTotalBtn(cnt.data().count);
@@ -117,7 +117,7 @@ const App = ({ modeToggleFunc, modeToggle }) => {
         // localStorage.setItem(BUTTONS_CACHE_KEY, JSON.stringify(buttonsData));
         setButtonsData([...buttonsData, ...newBtn]);
         buttonsData.map((item) => {
-            console.log("btnnnnnnnn----datttt", item.githubUsername);
+            console.log("id:", item.githubUsername);
         });
     };
 

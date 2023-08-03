@@ -34,11 +34,12 @@ export default function Main({
     // // change by aditya
     const handlePageChangeWithFetchMore = async (pageNumber) => {
         // if(buttonsData.length)
-        try {
-            await fetchMoreData();
-        } catch (error) {
-            console.log("Error fetching data:", error);
-        }
+        if (buttonsData.length === (pageNumber - 1) * 6)
+            try {
+                await fetchMoreData();
+            } catch (error) {
+                console.log("Error fetching data:", error);
+            }
 
         setCurrentPage(pageNumber);
         localStorage.setItem("current_page", pageNumber);
@@ -51,7 +52,11 @@ export default function Main({
         <ul className={classes.paginationList}>
             <li
                 className={`${classes.paginationItem} ${isActive(0)}`}
-                onClick={() => handlePageChange(currentPage - 1)}
+                onClick={() => {
+                    return currentPage - 1 > 0
+                        ? handlePageChange(currentPage - 1)
+                        : handlePageChange(1);
+                }}
             >
                 {"<"}
             </li>
@@ -100,12 +105,19 @@ export default function Main({
                 className={`${classes.paginationItem} ${isActive(
                     Math.ceil(buttonsData.length / itemsPerPage) - 1
                 )}`}
-                onClick={() =>
-                    handlePageChangeWithFetchMore(
-                        // change by aditya
-                        // Math.ceil(buttonsData.length / itemsPerPage)
-                        currentPage + 1
-                    )
+                onClick={
+                    () => {
+                        return currentPage + 1 < Math.ceil(totalBtn / 6)
+                            ? handlePageChangeWithFetchMore(currentPage + 1)
+                            : handlePageChangeWithFetchMore(
+                                  Math.ceil(totalBtn / 6)
+                              );
+                    }
+                    // handlePageChangeWithFetchMore(
+                    //     // change by aditya
+                    //     // Math.ceil(buttonsData.length / itemsPerPage)
+                    //     currentPage + 1
+                    // )
                 }
             >
                 {">"}

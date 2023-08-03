@@ -54,6 +54,11 @@ const App = ({ modeToggleFunc, modeToggle }) => {
     const [totalBtn, setTotalBtn] = useState();
 
     // const BUTTONS_CACHE_KEY = "buttonsData";
+
+    //vars
+    const buttonCollectionRef = collection(db, "buttons");
+
+    //
     const getButtonsData = async () => {
         // const cachedData = localStorage.getItem(BUTTONS_CACHE_KEY);
         // if (cachedData) {
@@ -63,8 +68,7 @@ const App = ({ modeToggleFunc, modeToggle }) => {
         // const buttonCollectionRef = collection(db, "buttons");
         // const data = await getDocs(buttonCollectionRef);
 
-        const buttonCollectionRef = collection(db, "buttons");
-        let snapshot = query(
+        const snapshot = query(
             buttonCollectionRef,
             orderBy("likeCounter", "desc"),
             limit(6)
@@ -77,10 +81,13 @@ const App = ({ modeToggleFunc, modeToggle }) => {
         }));
 
         const cnt = await getCountFromServer(buttonCollectionRef);
+
         buttonsData.map((item) => {
             console.log("id:", item.githubUsername);
         });
         console.log("count: " + cnt.data().count);
+
+        //
         setTotalBtn(cnt.data().count);
 
         const lastBtn = data?.docs[data.docs.length - 1];
@@ -98,7 +105,7 @@ const App = ({ modeToggleFunc, modeToggle }) => {
         // const buttonCollectionRef = collection(db, "buttons");
         // const data = await getDocs(buttonCollectionRef);
 
-        const buttonCollectionRef = collection(db, "buttons");
+        // const buttonCollectionRef = collection(db, "buttons");
         let snapshot = query(
             buttonCollectionRef,
             orderBy("likeCounter", "desc"),
@@ -116,6 +123,8 @@ const App = ({ modeToggleFunc, modeToggle }) => {
         setLastButton(lastBtn);
         // localStorage.setItem(BUTTONS_CACHE_KEY, JSON.stringify(buttonsData));
         setButtonsData([...buttonsData, ...newBtn]);
+
+        // tp check for the number of objects fetched.. so basically how many req are made
         buttonsData.map((item) => {
             console.log("id:", item.githubUsername);
         });

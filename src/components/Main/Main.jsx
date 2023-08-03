@@ -40,10 +40,10 @@ export default function Main({
             } catch (error) {
                 console.log("Error fetching data:", error);
             }
-
-        setCurrentPage(pageNumber);
-        localStorage.setItem("current_page", pageNumber);
-        window.scrollTo({ top: 500, behavior: "smooth" });
+        handlePageChange(pageNumber);
+        // setCurrentPage(pageNumber);
+        // localStorage.setItem("current_page", pageNumber);
+        // window.scrollTo({ top: 500, behavior: "smooth" });
     };
 
     // change by aditya
